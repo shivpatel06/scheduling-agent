@@ -3,11 +3,11 @@ from datetime import date
 from typing import Dict, List, Optional
 
 
-# ── Constants ──────────────────────────────────────────────
+# Constants 
 SLOT_DURATION = 0.5  # each time slot is 30 minutes
 
 
-# ── Task ───────────────────────────────────────────────────
+#  Task
 @dataclass
 class Task:
     """A single task (assignment, project, reading, etc.) that needs scheduling."""
@@ -27,7 +27,7 @@ class Task:
         return f"Task({self.id}, '{self.name}', {self.estimated_duration}h, due={self.deadline})"
 
 
-# ── TimeSlot ───────────────────────────────────────────────
+# TimeSlot 
 @dataclass(frozen=True)
 class TimeSlot:
     """A single 30-minute block of time on a specific day.
@@ -57,7 +57,7 @@ class TimeSlot:
         return f"TimeSlot({self.date}, {self.time_label}, {status})"
 
 
-# ── Schedule ───────────────────────────────────────────────
+# Schedule
 @dataclass
 class Schedule:
     """A mapping of time slots to tasks, representing a complete schedule.

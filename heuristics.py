@@ -4,7 +4,7 @@ from models import Task, TimeSlot, Schedule, SLOT_DURATION
 from simulator import available_slots
 
 
-# ── Core Greedy Assignment ─────────────────────────────────
+#  Core Greedy Assignment 
 def _greedy_schedule(sorted_tasks: List[Task], slots: List[TimeSlot]) -> Schedule:
     """Assign tasks to time slots in the order given.
     
@@ -35,7 +35,7 @@ def _greedy_schedule(sorted_tasks: List[Task], slots: List[TimeSlot]) -> Schedul
     return schedule
 
 
-# ── Earliest Deadline First ────────────────────────────────
+#  Earliest Deadline First
 def earliest_deadline_first(tasks: List[Task], slots: List[TimeSlot]) -> Schedule:
     """Schedule tasks by earliest deadline first.
     
@@ -46,7 +46,7 @@ def earliest_deadline_first(tasks: List[Task], slots: List[TimeSlot]) -> Schedul
     return _greedy_schedule(sorted_tasks, slots)
 
 
-# ── Shortest Processing Time ──────────────────────────────
+# Shortest Processing Time 
 def shortest_processing_time(tasks: List[Task], slots: List[TimeSlot]) -> Schedule:
     """Schedule tasks by shortest duration first.
     
@@ -57,7 +57,7 @@ def shortest_processing_time(tasks: List[Task], slots: List[TimeSlot]) -> Schedu
     return _greedy_schedule(sorted_tasks, slots)
 
 
-# ── Quick Test ─────────────────────────────────────────────
+#  Quick Test 
 if __name__ == "__main__":
     from datetime import date
     from simulator import generate_scenario

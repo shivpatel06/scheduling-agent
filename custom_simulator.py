@@ -5,7 +5,7 @@ from typing import List, Tuple
 from models import Task, TimeSlot, SLOT_DURATION
 
 
-# ── Configuration ──────────────────────────────────────────
+#  Configuration
 DAY_START = 8.0   # 8:00 AM
 DAY_END = 22.0    # 10:00 PM
 
@@ -171,7 +171,7 @@ def generate_tasks(
     return tasks
 
 
-# ── Scenario Generation ───────────────────────────────────
+# Scenario Generation
 def generate_scenario(
     start_date: date,
     num_days: int = 7,
@@ -272,7 +272,7 @@ def generate_custom_scenario(
     return tasks, slots
 
 
-# ── Helpers ────────────────────────────────────────────────
+#  Helpers
 def _frange(start: float, stop: float, step: float) -> List[float]:
     """Generate a list of floats from start to stop (exclusive) by step."""
     result = []
@@ -312,5 +312,6 @@ if __name__ == "__main__":
     total_task_hours = sum(t.estimated_duration for t in tasks)
     print(f"\nTotal task hours: {total_task_hours}h")
     print(f"Utilization: {total_task_hours / (avail * SLOT_DURATION) * 100:.1f}%")
+
 
 
