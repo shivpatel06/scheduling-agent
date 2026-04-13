@@ -5,7 +5,7 @@ from typing import List, Tuple
 from models import Task, TimeSlot, SLOT_DURATION
 
 
-# ── Configuration ──────────────────────────────────────────
+#  Configuration
 DAY_START = 8.0   # 8:00 AM
 DAY_END = 22.0    # 10:00 PM
 
@@ -28,7 +28,7 @@ WEEKEND_BLOCKS = (1, 2)        # fewer fixed blocks on weekends
 WEEKEND_BLOCK_SLOTS = (2, 3)   # 1-1.5 hours each
 
 
-# ── Time Slot Generation ──────────────────────────────────
+# Time Slot Generation
 def generate_time_slots(
     start_date: date,
     num_days: int = 7,
@@ -207,7 +207,7 @@ def available_slots(slots: List[TimeSlot]) -> List[TimeSlot]:
     )
 
 
-# ── Quick Test ─────────────────────────────────────────────
+#  Quick Test
 if __name__ == "__main__":
     from datetime import date
 

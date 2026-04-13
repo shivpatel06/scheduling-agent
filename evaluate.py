@@ -258,9 +258,68 @@ if __name__ == "__main__":
     results4 = run_scenario(tasks4, slots4, "Scenario 4")
     print_metrics_table(results4, "Scenario 4: 25 tasks, over-constrained (seed=13)")
  
-    # Replanning scenario
-    orig_m, replan_m = run_replanning_scenario(tasks2, slots2, disruption_day=2)
-    print_disruption_table(orig_m, replan_m)
- 
+    # Replanning evaluation: multiple seeds and disruption days
+    replanning_seeds = [42, 99, 7, 21]
+    disruption_days = [1, 2, 3]
+    num_tasks = 12
+
+    replan_results = []
+
+    for seed in replanning_seeds:
+        tasks, slots = generate_scenario(num_tasks=num_tasks, seed=seed, start_date=start)
+        for day in disruption_days:
+            orig_m, replan_m = run_replanning_scenario(tasks, slots, disruption_day=day)
+            replan_results.append({
+                'seed': seed,
+                'disruption_day': day,
+                'missed_before': orig_m.missed_deadlines,
+                'missed_after': replan_m.missed_deadlines,
+                'max_load_before': orig_m.max_daily_workload_hours,
+                'max_load_after': replan_m.max_daily_workload_hours,
+                'disruption_pct': replan_m.schedule_disruption * 100
+            })
+
+    # Print replanning summary table
+    print(f"\n{'='*80}")
+    print("  Replanning Evaluation Summary (12 tasks)")
+    print(f"{'='*80}")
+    header = f"{'Seed':>6} {'Day':>4} {'Missed':>8} {'Missed':>8} {'MaxLoad':>8} {'MaxLoad':>8} {'Disrupt':>8}"
+    subheader = f"{'':6} {'':4} {'Before':>8} {'After':>8} {'Before(h)':>8} {'After(h)':>8} {'%':>8}"
+    print(header)
+    print(subheader)
+    print("-" * 80)
+
+    total_missed_before = 0
+    total_missed_after = 0
+    total_disruption = 0
+    count = 0
+
+    for r in replan_results:
+        print(
+            f"{r['seed']:>6} "
+            f"{r['disruption_day']:>4} "
+            f"{r['missed_before']:>8} "
+            f"{r['missed_after']:>8} "
+            f"{r['max_load_before']:>8.1f} "
+            f"{r['max_load_after']:>8.1f} "
+            f"{r['disruption_pct']:>7.1f}%"
+        )
+        total_missed_before += r['missed_before']
+        total_missed_after += r['missed_after']
+        total_disruption += r['disruption_pct']
+        count += 1
+
+    print("-" * 80)
+    avg_missed_before = total_missed_before / count if count > 0 else 0
+    avg_missed_after = total_missed_after / count if count > 0 else 0
+    avg_disruption = total_disruption / count if count > 0 else 0
+    print(
+        f"{'AVERAGE':>11} "
+        f"{avg_missed_before:>8.1f} "
+        f"{avg_missed_after:>8.1f} "
+        f"{'':8} "
+        f"{'':8} "
+        f"{avg_disruption:>7.1f}%"
+    )
+
     print("\nDone.\n")
- 
